@@ -16,6 +16,8 @@ pytest-cov = "*"
 pytest-mock = "*"
 pytest-factoryboy = "*"
 django-filter = "*"
+djangorestframework = "*"
+graphene-django = "*"
 
 [dev-packages]
 
