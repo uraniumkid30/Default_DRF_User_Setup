@@ -15,7 +15,7 @@ LOCAL_APPS = [
 
 THIRD_PARTY_APPS = [
     "rest_framework",
-    # "whitenoise.runserver_nostatic",
+    "corsheaders",
 ]
 
 ALL_APPS_CONTAINER = {

@@ -19,6 +19,7 @@ django-filter = "*"
 djangorestframework = "*"
 graphene-django = "*"
 pyjwt = "*"
+django-cors-headers = "*"
 
 [dev-packages]
 
