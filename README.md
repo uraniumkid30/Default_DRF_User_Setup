@@ -37,4 +37,4 @@ pipenv run pre-commit install
 
 This will install pre-commits lattest settings at .git/hooks/pre-commit
 
-Also create an issue if all doesnt go well. thanks
+Also create an issue if all doesnt go well, thanks.
