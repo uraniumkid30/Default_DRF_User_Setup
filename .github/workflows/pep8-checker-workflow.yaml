@@ -1,0 +1,77 @@
+name: PEPE8 Checker And Formatter.
+run-name: ${{ github.actor }} has added some Contributions 🚀
+on:
+  pull_request:
+    branches:
+      - main
+jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.7",]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Get changed files
+        id: changed-files
+        uses: tj-actions/changed-files@v34
+        with:
+          files: |
+            **/*.py
+          files_ignore: |
+            **/migrations/**
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+      
+      - name: Install dependencies for Linter  
+        run: |
+          sudo apt-get install gettext libpq-dev -y
+          python -m pip install --upgrade pip
+          pip install flake8 autopep8
+      
+      - name: Linting Changes with FLAKE8
+        run: flake8 ${{ steps.changed-files.outputs.all_changed_files }} --count --exit-zero --max-complexity=10 --exclude=migrations --max-line-length=127 --statistics --ignore=E731,F841,W605,W504,F401,E722,F403,F405
+
+
+  format:
+    name: Format
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.7",]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Get changed files
+        id: changed-files
+        uses: tj-actions/changed-files@v34
+        with:
+          files: |
+            **/*.py
+          files_ignore: |
+            **/migrations/**
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+      
+      - name: Install dependencies for Formatter
+        run: |
+          sudo apt-get install gettext libpq-dev -y
+          python -m pip install --upgrade pip
+          pip install autopep8
+
+      - name: Auto correct with AUTOPEP8
+        run: autopep8 --in-place --aggressive --ignore=E731 --max-line-length=127 ${{ steps.changed-files.outputs.all_changed_files }}

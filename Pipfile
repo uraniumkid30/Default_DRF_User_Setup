@@ -1,0 +1,23 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+django = "*"
+python-environ = "*"
+whitenoise = "==6.0.0"
+typing-extensions = "*"
+pytest = "*"
+black = "*"
+pytest-django = "*"
+flake8 = "*"
+pytest-cov = "*"
+pytest-mock = "*"
+pytest-factoryboy = "*"
+django-filter = "*"
+
+[dev-packages]
+
+[requires]
+python_version = "3.9"
