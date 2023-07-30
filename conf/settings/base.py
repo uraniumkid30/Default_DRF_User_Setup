@@ -8,6 +8,7 @@ from conf.addons.directories import (
 )
 from conf.addons.apps import INSTALLED_APPS, LOCAL_APPS
 from conf.addons.logs import get_logs_settings
+from conf.addons.rest_framework import *
 
 INTERNAL_IPS = ("127.0.0.1",)
 
@@ -101,3 +102,4 @@ MEDIA_ROOT = MEDIA_DIR
 
 LOGGING = get_logs_settings(LOGS_DIR, LOCAL_APPS)
 AUTH_USER_MODEL = 'accounts.User'
+API_VERSION = "v1"

@@ -49,7 +49,7 @@ class CustomPageNumberPagination(PageNumberPagination):
         )
 
 
-class CustomPaginator:
+class CustomPagination:
     def __init__(self, **kwargs):
         request = kwargs.get("request")
         pagination_type = kwargs.get("pagination_type", "PNP")

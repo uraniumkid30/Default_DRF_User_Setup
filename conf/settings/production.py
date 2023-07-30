@@ -24,7 +24,7 @@ DATABASES = {
 DEBUG = env.bool("DJANGO_DEBUG_SETTINGS", False)
 
 SECRET_KEY = f"django-insecure-{secrets.token_urlsafe(50)}"
-
+ENVIRONMENT = env.str("DJANGO_ENVIRONMENT", "PRODUCTION")
 base_requirements = os.path.join(REQUIREMENTS_DIR, "base.txt")
 prod_requirements = os.path.join(REQUIREMENTS_DIR, "production.txt")
 if not FileProcessingTool.is_file_exists(base_requirements):

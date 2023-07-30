@@ -11,7 +11,7 @@ admin.autodiscover()
 app = "applications."
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("accounts/", include(f'{app}accounts.urls'))
+    path(f"api/{settings.API_VERSION}/", include(f'{app}urls'))
 ]
 
 urlpatterns += staticfiles_urlpatterns()

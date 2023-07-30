@@ -1,7 +1,7 @@
 REST_FRAMEWORK = {
-    'EXCEPTION_HANDLER': 'rest_framework.views.exception_handler',
+    'EXCEPTION_HANDLER': 'conf.core.api.exception_handlers.detailed_exception_handler',
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'applications.accounts.authentications.JWTAuthentication',
+        'applications.accounts.managers.authentication.JWTAuthentication',
     ),
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.IsAuthenticated',

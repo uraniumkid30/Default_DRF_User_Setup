@@ -7,11 +7,12 @@ from rest_framework import exceptions
 from rest_framework.response import Response
 from rest_framework.views import exception_handler
 from rest_framework.serializers import as_serializer_error
+from rest_framework.exceptions import ValidationError as DRFValidationError
 
 from .exceptions import ApplicationError
 
 
-def drf_modification_exception_handler(exc, ctx):
+def drf_modification_exception_handler(exc: DRFValidationError, ctx: dict):
     if isinstance(exc, DjangoValidationError):
         exc = exceptions.ValidationError(as_serializer_error(exc))
 
@@ -33,14 +34,14 @@ def drf_modification_exception_handler(exc, ctx):
     return response
 
 
-def detailed_exception_handler(exc, ctx):
+def detailed_exception_handler(exc: DRFValidationError, ctx: dict):
     """
-    {
+    response = {
         "message": "Error message",
         "extra": {}
     }
     """
-    if isinstance(exc, DjangoValidationError):
+    if isinstance(exc, DRFValidationError):
         exc = exceptions.ValidationError(as_serializer_error(exc))
 
     if isinstance(exc, Http404):
@@ -62,7 +63,7 @@ def detailed_exception_handler(exc, ctx):
     if isinstance(exc.detail, (list, dict)):
         response.data = {"detail": response.data}
 
-    if isinstance(exc, exceptions.ValidationError):
+    if isinstance(exc, DRFValidationError):
         response.data["message"] = "Validation error"
         response.data["extra"] = {"fields": response.data["detail"]}
         non_field_errors: list = response.data["detail"].get("non_field_errors")

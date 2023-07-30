@@ -77,5 +77,3 @@ class UserProfile(TimeBaseModel):
 
     def __str__(self):
         return "Profile for : {}".format(self.user)
-
-
