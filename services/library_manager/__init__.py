@@ -16,10 +16,11 @@ def lib_manager_factory(lib_manager: str = ""):
         )
     else:
         LIBRARY_MANAGER: str = lib_manager
+    LIBRARY_MANAGER = LIBRARY_MANAGER.upper()
     if not UPDATE_REQUIREMENTS:
         return DefaultLibraryManager()
     if LIBRARY_MANAGER == LibraryManagers.PIP:
         return PipLibraryManager()
     elif LIBRARY_MANAGER == LibraryManagers.PIPENV:
         return PipenvLibraryManager()
-    
+    raise ValueError("provide a library manager")

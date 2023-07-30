@@ -18,6 +18,9 @@ pytest-factoryboy = "*"
 django-filter = "*"
 djangorestframework = "*"
 graphene-django = "*"
+pyjwt = "*"
+django-cors-headers = "*"
+drf-spectacular = "*"
 
 [dev-packages]
 

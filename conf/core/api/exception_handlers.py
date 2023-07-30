@@ -1,0 +1,78 @@
+from django.http import Http404
+from django.core.exceptions import (
+    ValidationError as DjangoValidationError,
+    PermissionDenied,
+)
+from rest_framework import exceptions
+from rest_framework.response import Response
+from rest_framework.views import exception_handler
+from rest_framework.serializers import as_serializer_error
+from rest_framework.exceptions import ValidationError as DRFValidationError
+
+from .exceptions import ApplicationError
+
+
+def drf_modification_exception_handler(exc: DRFValidationError, ctx: dict):
+    if isinstance(exc, DjangoValidationError):
+        exc = exceptions.ValidationError(as_serializer_error(exc))
+
+    if isinstance(exc, Http404):
+        exc = exceptions.NotFound()
+
+    if isinstance(exc, PermissionDenied):
+        exc = exceptions.PermissionDenied()
+
+    response = exception_handler(exc, ctx)
+
+    # If unexpected error occurs (server error, etc.)
+    if response is None:
+        return response
+
+    if isinstance(exc.detail, (list, dict)):
+        response.data = {"detail": response.data}
+
+    return response
+
+
+def detailed_exception_handler(exc: DRFValidationError, ctx: dict):
+    """
+    response = {
+        "message": "Error message",
+        "extra": {}
+    }
+    """
+    if isinstance(exc, DRFValidationError):
+        exc = exceptions.ValidationError(as_serializer_error(exc))
+
+    if isinstance(exc, Http404):
+        exc = exceptions.NotFound()
+
+    if isinstance(exc, PermissionDenied):
+        exc = exceptions.PermissionDenied()
+
+    response = exception_handler(exc, ctx)
+
+    # If unexpected error occurs (server error, etc.)
+    if response is None:
+        if isinstance(exc, ApplicationError):
+            data = {"message": exc.message, "extra": exc.extra}
+            return Response(data, status=400)
+
+        return response
+
+    if isinstance(exc.detail, (list, dict)):
+        response.data = {"detail": response.data}
+
+    if isinstance(exc, DRFValidationError):
+        response.data["message"] = "Validation error"
+        response.data["extra"] = {"fields": response.data["detail"]}
+        non_field_errors: list = response.data["detail"].get("non_field_errors")
+        if non_field_errors:
+            response.data["message"] += f", {non_field_errors[0]}"
+    else:
+        response.data["message"] = response.data["detail"]
+        response.data["extra"] = {}
+
+    del response.data["detail"]
+
+    return response

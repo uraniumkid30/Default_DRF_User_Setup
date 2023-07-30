@@ -1,6 +1,9 @@
 import uuid
+from datetime import datetime, timedelta
 
+import jwt
 from django.db import models
+from django.conf import settings
 from django.contrib.auth.models import (
     AbstractBaseUser,
     PermissionsMixin,
@@ -25,14 +28,23 @@ class User(AbstractBaseUser, PermissionsMixin, TimeBaseModel):
     REQUIRED_FIELDS = ['email', 'username', ]
     objects = UserManager()
 
-    def __str__(self):
-        # if self.first_name:
-        #     return "{}".format(self.first_name)
-        return "{}:{}".format(self.username, self.phone_no)
-
     class Meta:
         verbose_name = 'user'
         verbose_name_plural = 'users'
+
+    @property
+    def token(self):
+        return self._generate_jwt_token()
+
+    def _generate_jwt_token(self):
+        dt = datetime.now() + timedelta(days=365)
+
+        token = jwt.encode({
+            'id': str(self.pk),
+            'exp': int(dt.strftime('%s'))
+        }, settings.SECRET_KEY, algorithm='HS256')
+
+        return token.decode('utf-8')
 
     def get_full_name(self) -> str:
         '''
@@ -46,6 +58,11 @@ class User(AbstractBaseUser, PermissionsMixin, TimeBaseModel):
         Returns the short name for the user.
         '''
         return self.first_name
+
+    def __str__(self):
+        # if self.first_name:
+        #     return "{}".format(self.first_name)
+        return "{}:{}".format(self.username, self.phone_no)
 
 
 class Blacklist(TimeBaseModel):
