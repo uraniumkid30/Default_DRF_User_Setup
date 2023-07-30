@@ -20,6 +20,7 @@ djangorestframework = "*"
 graphene-django = "*"
 pyjwt = "*"
 django-cors-headers = "*"
+drf-spectacular = "*"
 
 [dev-packages]
 
