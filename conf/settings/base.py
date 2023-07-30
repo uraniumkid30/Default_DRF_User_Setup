@@ -8,6 +8,7 @@ from conf.addons.directories import (
 )
 from conf.addons.apps import INSTALLED_APPS, LOCAL_APPS
 from conf.addons.logs import get_logs_settings
+from conf.addons.api_docs import *
 from conf.addons.rest_framework import *
 
 INTERNAL_IPS = ("127.0.0.1",)
