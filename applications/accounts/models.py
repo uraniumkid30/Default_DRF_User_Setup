@@ -9,7 +9,7 @@ from django.contrib.auth.models import (
     PermissionsMixin,
 )
 
-from .managers import UserManager
+from .managers.managers import UserManager
 from conf.core.models import TimeBaseModel
 
 
