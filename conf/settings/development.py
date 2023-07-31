@@ -23,8 +23,8 @@ DATABASES = {
 
 DEBUG = DEBUG = env.bool("DJANGO_DEBUG_SETTINGS", True)
 
-SECRET_KEY = f"django-insecure-{secrets.token_urlsafe(50)}"
-ENVIRONMENT = env.str("DJANGO_ENVIRONMENT", "DEVELOPMENT")
+SECRET_KEY = env.str("SECRET_KEY")
+ENVIRONMENT = env.str("DJANGO_SETTINGS_MODULE", ".DEVELOPMENT").split(".")[-1].upper()
 # process requirements
 base_requirements = os.path.join(REQUIREMENTS_DIR, "base.txt")
 dev_requirements = os.path.join(REQUIREMENTS_DIR, "development.txt")

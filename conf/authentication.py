@@ -3,8 +3,6 @@ from django.conf import settings
 from django.core.cache import cache
 from rest_framework import authentication, exceptions
 
-from applications.accounts.models import User
-
 
 class CustomAuthentication(authentication.BaseAuthentication):
     
@@ -66,6 +64,7 @@ class JWTAuthentication(authentication.BaseAuthentication):
             raise exceptions.AuthenticationFailed(msg)
 
         try:
+            from applications.accounts.models import User
             user = User.objects.get(pk=payload['id'])
         except User.DoesNotExist:
             msg = 'No user matching this token was found.'
