@@ -52,8 +52,8 @@ class JWTAuthentication(authentication.BaseAuthentication):
         successful, return the user and token. If not, throw an error.
         """
         try:
-            payload = jwt.decode(token, settings.SECRET_KEY)
-        
+            payload = jwt.decode(token, settings.SECRET_KEY, algorithms=['HS256'])
+
         except jwt.exceptions.ExpiredSignatureError:
             msg = 'Token Expired.'
             raise exceptions.AuthenticationFailed(msg)
