@@ -44,7 +44,7 @@ class User(AbstractBaseUser, PermissionsMixin, TimeBaseModel):
             'exp': int(dt.strftime('%s'))
         }, settings.SECRET_KEY, algorithm='HS256')
 
-        return token.decode('utf-8')
+        return token
 
     def get_full_name(self) -> str:
         '''
