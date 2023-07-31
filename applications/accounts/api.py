@@ -1,10 +1,9 @@
-import re
 import sys
 import logging
 
 import jwt
 from jwt.exceptions import InvalidSignatureError
-from conf.core.api.pagination import CustomPagination
+from conf.core.api.pagination import CustomPageNumberPagination
 from django.contrib.auth import authenticate, logout
 from django.conf import settings
 
@@ -15,7 +14,9 @@ from rest_framework.views import APIView
 from rest_framework.generics import ListAPIView
 from rest_framework.permissions import IsAuthenticated
 
-from applications.accounts.models import User, UserProfile
+from applications.accounts.managers.selectors import (
+    UserSelector,
+)
 from applications.accounts.managers.serializers import (
     LoginSerializer,
     RegistrationSerializer,
@@ -44,7 +45,7 @@ class LoginAPIView(APIView):
                 try:
                     user_data = jwt.decode(verification_token, settings.SECRET_KEY, algorithms=['HS256'])
                     user_id = user_data['id']
-                    user = User.objects.filter(id=user_id)
+                    user = UserSelector.fetch_records(id=user_id)
                 except InvalidSignatureError:
                     user = None
 
@@ -90,7 +91,7 @@ class UserProfileView(APIView):
     permission_classes = (IsAuthenticated,)
 
     def get(self, request):
-        user = User.objects.get(phone_no=request.user.phone_no)
+        user = UserSelector.fetch_record(phone_no=request.user.phone_no)
         data = {'first_name': user.first_name, 'last_name': user.last_name,
                 'phone_no': user.phone_no, 'email': user.email,
                 }
@@ -105,6 +106,5 @@ class UserProfileView(APIView):
 class UserListView(ListAPIView):
     permission_classes = (AllowAny,)
     serializer_class = ListUserSerializer
-    # filter_class = UserFilter
-    queryset = User.objects.all()
-    pagination_class = CustomPagination
+    queryset = UserSelector.fetch_records()
+    pagination_class = CustomPageNumberPagination
