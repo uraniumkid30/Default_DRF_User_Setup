@@ -26,7 +26,7 @@ class UserService(BaseService):
 
     @classmethod
     def update_user(cls, *, user: User, data: dict = {}) -> User:
-        update_user, is_updated = cls.create_record(
+        update_user, is_updated = cls.update_record(
             user, **data
         )
         return update_user or user
