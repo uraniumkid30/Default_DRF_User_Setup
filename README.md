@@ -37,4 +37,9 @@ pipenv run pre-commit install
 
 This will install pre-commits lattest settings at .git/hooks/pre-commit.
 
-Also create an issue if all doesnt go well, thanks.
+# Directory Notes:
+- New apps should go into the `Applications` Directory.
+- Urls for each app should go into `Applications.urls.py` file.
+
+# Run into Problems?
+Please create an issue if all doesnt go well, thanks.
