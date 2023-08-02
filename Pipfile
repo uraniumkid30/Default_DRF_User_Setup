@@ -21,6 +21,7 @@ graphene-django = "*"
 pyjwt = "*"
 django-cors-headers = "*"
 drf-spectacular = "*"
+gunicorn = "*"
 
 [dev-packages]
 
