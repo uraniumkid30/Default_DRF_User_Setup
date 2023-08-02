@@ -14,6 +14,7 @@ DATABASE_DIR = os.path.join(PROJECT_DIR, "databases")
 REQUIREMENTS_DIR = os.path.join(ROOT_DIR, "requirements")
 MISCELLANEOUS_DIR = os.path.join(PROJECT_DIR, "miscellaneous")
 LOGS_DIR = os.path.join(MISCELLANEOUS_DIR, "LOGS")
+GUNICORN_DIR = os.path.join(MISCELLANEOUS_DIR, "GUNICORN")
 FILES_DIR = os.path.join(MISCELLANEOUS_DIR, "FILES")
 THEME_DIR = os.path.join(MISCELLANEOUS_DIR, "THEMES")
 
@@ -48,6 +49,7 @@ def create_neccessary_directories():
         THEME_DIR,
         FILES_DIR,
         LOGS_DIR,
+        GUNICORN_DIR,
         STATIC_DIR,
         MEDIA_DIR,
         STATIC_COLLECTION_DIR,
@@ -66,6 +68,7 @@ if env.bool("CREATE_DEFAULT_DIRECTORIES", True):
     create_neccessary_directories()
 else:
     LOGS_DIR = ""
+    GUNICORN_DIR = ""
     THEME_DIR = ""
     TEMPLATES_DIR = ""
     REQUIREMENTS_DIR = ""
