@@ -17,6 +17,7 @@ graphene
 graphene-django
 graphql-core
 graphql-relay
+gunicorn
 inflection
 iniconfig
 jsonschema
