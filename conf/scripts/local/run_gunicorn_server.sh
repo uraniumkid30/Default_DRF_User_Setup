@@ -24,7 +24,7 @@ then
     source $(poetry env info --path)/bin/activate
     source conf/env_variables/.env
     python manage.py check
-    python manage.py runserver
+    gunicorn -c conf/scripts/local/gunicorn_script.py
 elif [ ${MANAGER_NAME} == "pipenv" ]
 then
     echo "${blue}>>> Syncing environment with with ${MANAGER_NAME}."
@@ -33,11 +33,11 @@ then
     source conf/env_variables/.env
     echo "${green}>>> About running development server with ${MANAGER_NAME}."
     pipenv run python manage.py check
-    pipenv run python manage.py runserver
+    pipenv run gunicorn -c conf/scripts/local/gunicorn_script.py
 else
     echo "${blue}>>> Syncing environment with with ${MANAGER_NAME}."
     source conf/env_variables/.env
     echo "${green}>>> About running development server with ${MANAGER_NAME}."
     python manage.py check
-    python manage.py runserver
+    gunicorn -c conf/scripts/local/gunicorn_script.py
 fi
