@@ -62,6 +62,7 @@ def create_neccessary_directories():
     ]
     for _dir in directory_list:
         FileProcessingTool.check_and_create_dir(_dir)
+    FileProcessingTool.check_and_create_file(os.path.join(LOGS_DIR, "gunicorn.log"))
 
 
 if env.bool("CREATE_DEFAULT_DIRECTORIES", True):
