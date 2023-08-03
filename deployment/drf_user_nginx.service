@@ -1,0 +1,12 @@
+server {
+    listen 80;
+    server_name your_server_domain_or_IP;
+    location = /favicon.ico { access_log off; log_not_found off; }
+    location /static/ {
+        root /home/drf_user_project/drf_user;
+    }
+    location / {
+        include proxy_params;
+        proxy_pass http://unix:/run/drf_user_gunicorn.sock;
+    }
+}

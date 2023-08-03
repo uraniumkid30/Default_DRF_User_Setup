@@ -1,0 +1,17 @@
+[Unit]
+Description=drf_user_gunicorn daemon
+Requires=drf_user_gunicorn.socket
+After=network.target
+
+[Service]
+User=drf_user_project
+Group=www-data
+WorkingDirectory=/home/drf_user_project/drf_user
+ExecStart=/home/drf_user_project/drf_user/env/bin/gunicorn \
+          --access-logfile - \
+          --workers 3 \
+          --bind unix:/run/drf_user_gunicorn.sock \
+          conf.wsgi:application
+
+[Install]
+WantedBy=multi-user.target
