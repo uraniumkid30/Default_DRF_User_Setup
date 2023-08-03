@@ -1,0 +1,6 @@
+[Unit]
+Description=drf_user_gunicorn socket
+[Socket]
+ListenStream=/run/drf_user_gunicorn.sock
+[Install]
+WantedBy=sockets.target
