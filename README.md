@@ -49,6 +49,10 @@ This will install pre-commits lattest settings at .git/hooks/pre-commit.
 - services like file management, emailing etc, should go into `services` Directory.
 - All settings are registered in `conf.settings` Directory.
 
+# Deployment Notes:
+- Recall that Django only ships along a Developmental server
+- besure to use gunicorn as a spark to wsgi  / asgi
+
 # Run into Problems?
 Please create an issue if all doesnt go well, thanks.
 
