@@ -20,7 +20,7 @@ services:
   app:
     container_name: starter_app
     build: .
-    command: ./scripts/local/start.sh
+    # command: ./scripts/local/start.sh
     volumes:
       - ./:/code
     ports:

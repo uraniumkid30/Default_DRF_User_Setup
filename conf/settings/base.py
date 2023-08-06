@@ -5,6 +5,7 @@ from conf.addons.directories import (
     LOGS_DIR,
     STATIC_COLLECTION_DIR,
     MEDIA_DIR,
+    BASE_DIR,
 )
 from conf.addons.apps import INSTALLED_APPS, LOCAL_APPS
 from conf.addons.logs import get_logs_settings
