@@ -54,6 +54,12 @@ This will install pre-commits lattest settings at .git/hooks/pre-commit.
 - besure to use gunicorn as a spark to wsgi  / asgi
 - containers are amazing, the project comes shipped with docker.
 
+# Useful docker commands
+- docker rm $(docker ps -a -q -f status=exited) remove all containers
+- docker rmi -f $(docker images -aq)
+- docker build . -t imagename
+- docker run imagename
+
 # Run into Problems?
 Please create an issue if all doesnt go well, thanks.
 
