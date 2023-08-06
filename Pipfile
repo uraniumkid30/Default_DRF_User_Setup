@@ -22,6 +22,7 @@ pyjwt = "*"
 django-cors-headers = "*"
 drf-spectacular = "*"
 gunicorn = "*"
+psycopg2-binary = "*"
 
 [dev-packages]
 

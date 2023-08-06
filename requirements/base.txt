@@ -29,6 +29,7 @@ pathspec
 platformdirs
 pluggy
 promise
+psycopg2-binary
 pycodestyle
 pyflakes
 pyjwt

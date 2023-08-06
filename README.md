@@ -59,6 +59,7 @@ This will install pre-commits lattest settings at .git/hooks/pre-commit.
 - docker rmi -f $(docker images -aq)
 - docker build . -t imagename
 - docker run imagename
+- docker volume rm $(docker volume ls -q)
 
 # Run into Problems?
 Please create an issue if all doesnt go well, thanks.

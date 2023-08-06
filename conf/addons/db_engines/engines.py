@@ -21,6 +21,12 @@ class PostgresqlEngine(BaseEngine):
     def get_schema(cls) -> DataclassEnum:
         """ Schema for Postgres database"""
         return PostgresqlSchema
+    
+    @classmethod
+    def get_engine_fields(cls, data: dict) -> dict:
+        if not data.get("HOST"):
+            data["HOST"] = "localhost"
+        return super(PostgresqlEngine, cls).get_engine_fields(data)
 
 
 class MysqlEngine(BaseEngine):

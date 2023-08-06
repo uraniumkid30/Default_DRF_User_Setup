@@ -1,6 +1,7 @@
 #!/bin/bash
 
 source conf/env_variables/.env
+echo "Successfully Connected"
 
 python manage.py check
 python manage.py migrate
