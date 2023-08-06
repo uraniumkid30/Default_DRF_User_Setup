@@ -14,11 +14,20 @@ from conf.addons.db_engines import db_engine_factory
 db_name = "production_database.sqlite3"
 db_path = os.path.join(DATABASE_DIR, db_name)
 FileProcessingTool.check_and_create_file(db_path)
+data = {"NAME": db_path}
+pg_data = {
+    "NAME": os.environ.get("DB_NAME"),
+    "USER": os.environ.get("DB_USER"),
+    "PASSWORD": os.environ.get("DB_PASSWORD"),
+    "HOST": os.environ.get("DB_HOST"),
+}
+res = db_engine_factory(
+    data=pg_data,
+    engine_name=env.str("DATABASE_ENGINE", "sqlite"),
+)
+print(res)
 DATABASES = {
-    "default": db_engine_factory(
-        data={"NAME": db_path},
-        engine_name=env.str("DATABASE_ENGINE", "sqlite"),
-    )
+    "default": res
 }
 
 DEBUG = env.bool("DJANGO_DEBUG_SETTINGS", False)

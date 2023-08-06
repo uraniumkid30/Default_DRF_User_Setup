@@ -16,7 +16,7 @@ class BaseEngineSchema(BaseSchema):
 
 @dataclass(frozen=True)
 class ProductionDBSchema(BaseEngineSchema):
-    HOST: str = field(default="127.0.0.1", init=False)
+    HOST: str
     USER: str
     PASSWORD: str
     PORT: str
