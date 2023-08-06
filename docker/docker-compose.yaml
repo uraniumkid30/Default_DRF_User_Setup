@@ -1,30 +1,44 @@
 version: "3.9"
    
 services:
-  # db:
-  #   image: postgres
-  #   container_name: mothership_api_db
-  #   volumes:
-  #     - ./data/db:/var/lib/postgresql/data
-  #   environment:
-  #     - POSTGRES_DB=postgres
-  #     - POSTGRES_USER=postgres
-  #     - POSTGRES_PASSWORD=postgres
   db:
-    image: nouchka/sqlite3:latest
-    container_name: started_app_db
-    volumes:
-      - ../data/db:/root/db
+    container_name: db
+    image: postgres:15-alpine
+    # volumes:
+    #   - postgres_data:/var/lib/postgresql/data/
+    env_file:
+      - .env
+    ports:
+      - "5432:5432"
     environment:
-      - SQLITE3_DB=development_database.sqlite3
+      - PGUSER=postgres
+      - PGPASSWORD=postgres
+      - PGDATABASE=postgres
+      - POSTGRES_HOST_AUTH_METHOD=trust
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_NAME}
+    restart: "always"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
   app:
-    container_name: starter_app
+    container_name: app
     build: .
-    # command: ./scripts/local/start.sh
+    command: ./conf/scripts/local/provide_env.sh
+    env_file:
+      - ./conf/env_variables/.env
     volumes:
       - ./:/code
     ports:
       - "8000:8000"
     depends_on:
       db:
-        condition: service_started
+        condition: "service_healthy"
+    restart: "always"
+
+# volumes:
+#   postgres_data:
