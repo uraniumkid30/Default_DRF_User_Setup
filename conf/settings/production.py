@@ -25,7 +25,6 @@ res = db_engine_factory(
     data=pg_data,
     engine_name=env.str("DATABASE_ENGINE", "sqlite"),
 )
-print(res)
 DATABASES = {
     "default": res
 }

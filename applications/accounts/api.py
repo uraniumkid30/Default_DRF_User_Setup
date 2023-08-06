@@ -106,5 +106,7 @@ class UserProfileView(APIView):
 class UserListView(ListAPIView):
     permission_classes = (AllowAny,)
     serializer_class = ListUserSerializer
-    queryset = UserSelector.fetch_records()
     pagination_class = CustomPageNumberPagination
+    
+    def get_queryset(self):
+        return UserSelector.fetch_records()
